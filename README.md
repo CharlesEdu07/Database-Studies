@@ -11,5 +11,5 @@ Um repositório para o curso de Banco de Dados do curso de Sistemas de Informaç
 
 * `conceptual-data-models`: Contém os arquivos .brm e jpg dos modelos conceituais de bancos de dados.
 * `logical-data-models`: Contém os arquivos .brm e jpg dos modelos lógicos de bancos de dados.
-* `Trabalhos`: Contém os arquivos .brm e jpg dos modelos físicos de bancos de dados.
+* `physical-data-models`: Contém os arquivos .brm e jpg dos modelos físicos de bancos de dados.
 * `README.md`: Este arquivo.
