@@ -22,3 +22,47 @@ async function main() {
 
 main().catch(console.error);
 ```
+
+Neste exemplo, estamos conectando a uma fonte de dados usando um DSN (Data Source Name) específico e executando uma consulta SQL simples para recuperar dados de uma tabela. Após a execução da consulta, a conexão é fechada para liberar recursos.
+
+O ODBC oferece uma maneira flexível e poderosa de interagir com diferentes bancos de dados, tornando-o uma escolha popular para desenvolvedores que precisam de interoperabilidade entre sistemas de banco de dados.
+
+
+# ORM com Prisma em TypeScript
+
+Prisma é uma ferramenta de ORM (Object-Relational Mapping) e de camada de banco de dados para TypeScript e JavaScript. Ele oferece uma maneira moderna e intuitiva de interagir com bancos de dados, permitindo que os desenvolvedores escrevam consultas em uma linguagem de consulta específica (Prisma Query Language ou PQL) e gerenciem esquemas de banco de dados de forma fácil e segura.
+
+Um dos principais benefícios do Prisma é a sua integração estreita com o TypeScript, proporcionando tipagem estática e autocompletamento em tempo de desenvolvimento. Além disso, o Prisma oferece suporte para várias bases de dados populares, incluindo PostgreSQL, MySQL e SQLite.
+
+Aqui está um exemplo básico de uso do Prisma em TypeScript:
+
+```typescript
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+async function main() {
+  // Criar um novo usuário
+  const newUser = await prisma.user.create({
+    data: {
+      name: 'John',
+      age: 30,
+    },
+  });
+  console.log(newUser);
+
+  // Consultar usuários
+  const users = await prisma.user.findMany();
+  console.log(users);
+}
+
+main()
+  .catch(console.error)
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
+```
+
+Neste exemplo, estamos usando o Prisma para criar um novo usuário na tabela `user` com os dados especificados e, em seguida, recuperar todos os usuários da tabela. O Prisma cuida da geração de consultas SQL adequadas para as operações desejadas e fornece uma API limpa e concisa para interagir com o banco de dados.
+
+O Prisma simplifica o desenvolvimento de aplicativos, oferecendo uma experiência de desenvolvimento moderna e produtiva para trabalhar com bancos de dados em TypeScript.
