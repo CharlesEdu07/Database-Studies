@@ -11,4 +11,7 @@ Um repositório para o curso de Banco de Dados do curso de Sistemas de Informaç
 
 * `conceptual-data-models`: Contém os arquivos .brm e jpg dos modelos conceituais de bancos de dados.
 * `logical-data-models`: Contém os arquivos .brm e jpg dos modelos lógicos de bancos de dados.
+* `normalization`: Contém os arquivos .brm e jpg dos modelos normalizados de bancos de dados.
+* `sql`: Contém os scripts SQL para criação de tabelas, inserção de dados e consultas.
+* [odbc-orm](./tarefas/orm/tarefa-orm.md): Conexão com banco de dados utilizando ODBC e ORM.
 * `README.md`: Este arquivo.
