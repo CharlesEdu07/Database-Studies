@@ -1,13 +1,13 @@
 package br.com.atividadedb.model.entities;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Employee {
     private Long id;
     private String name;
     private Character gender;
-    private Date birthDate;
+    private LocalDate birthDate;
     private BigDecimal salary;
     private Employee supervisor;
     private Department department;
@@ -39,11 +39,11 @@ public class Employee {
         this.gender = gender;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
