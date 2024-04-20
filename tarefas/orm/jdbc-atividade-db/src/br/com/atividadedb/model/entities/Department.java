@@ -14,6 +14,14 @@ public class Department implements Serializable {
     public Department() {
     }
 
+    public Department(Long id, String name, String acronym, String description, Employee manager) {
+        this.id = id;
+        this.name = name;
+        this.acronym = acronym;
+        this.description = description;
+        this.manager = manager;
+    }
+
     public Long getId() {
         return id;
     }
