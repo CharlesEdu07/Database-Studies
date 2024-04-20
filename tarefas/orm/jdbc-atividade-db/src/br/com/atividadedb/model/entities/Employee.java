@@ -16,6 +16,17 @@ public class Employee implements Serializable {
     public Employee() {
     }
 
+    public Employee(Long id, String name, Character gender, Date birthDate, BigDecimal salary, Employee supervisor,
+            Department department) {
+        this.id = id;
+        this.name = name;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.salary = salary;
+        this.supervisor = supervisor;
+        this.department = department;
+    }
+
     public Long getId() {
         return id;
     }
