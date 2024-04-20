@@ -5,7 +5,7 @@ public class Department {
     private String name;
     private String acronym;
     private String description;
-    private Long manager;
+    private Employee manager;
 
     public Department() {
     }
@@ -42,11 +42,11 @@ public class Department {
         this.description = description;
     }
 
-    public Long getManager() {
+    public Employee getManager() {
         return manager;
     }
 
-    public void setManager(Long manager) {
+    public void setManager(Employee manager) {
         this.manager = manager;
     }
 
