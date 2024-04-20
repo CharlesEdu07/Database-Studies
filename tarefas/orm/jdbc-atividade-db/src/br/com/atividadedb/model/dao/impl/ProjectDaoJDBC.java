@@ -26,7 +26,7 @@ public class ProjectDaoJDBC implements ProjectDao {
 
         try {
             st = conn.prepareStatement(
-                    "INSERT INTO atividade (nome, descricao, responsavel, depto, data_inicio, data_fim) VALUES (?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO projeto (nome, descricao, responsavel, depto, data_inicio, data_fim) VALUES (?, ?, ?, ?, ?, ?) RETURNING codigo");
 
             st.setString(1, project.getName());
             st.setString(2, project.getDescription());
@@ -35,21 +35,15 @@ public class ProjectDaoJDBC implements ProjectDao {
             st.setDate(5, new Date(project.getStartDate().getTime()));
             st.setDate(6, new Date(project.getEndDate().getTime()));
 
-            int rowsAffected = st.executeUpdate();
+            ResultSet rs = st.executeQuery();
 
-            if (rowsAffected > 0) {
-                ResultSet rs = st.getGeneratedKeys();
+            if (rs.next()) {
+                Long id = rs.getLong(1);
 
-                if (rs.next()) {
-                    long id = rs.getLong(1);
-
-                    project.setId(id);
-                }
-
-                DB.closeResultSet(rs);
-            } else {
-                throw new DbException("Unexpected error! No rows affected!");
+                project.setId(id);
             }
+
+            DB.closeResultSet(rs);
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {

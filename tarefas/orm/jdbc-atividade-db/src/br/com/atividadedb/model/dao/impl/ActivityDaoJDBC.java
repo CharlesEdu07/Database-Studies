@@ -25,28 +25,22 @@ public class ActivityDaoJDBC implements ActivityDao {
 
         try {
             st = conn.prepareStatement(
-                    "INSERT INTO atividade (descricao, projeto, data_inicio, data_fim) VALUES (?, ?, ?, ?)");
+                    "INSERT INTO atividade (descricao, projeto, data_inicio, data_fim) VALUES (?, ?, ?, ?) RETURNING codigo");
 
             st.setString(1, activity.getDescription());
             st.setLong(2, activity.getProject().getId());
             st.setDate(3, new Date(activity.getStartDate().getTime()));
             st.setDate(4, new Date(activity.getEndDate().getTime()));
 
-            int rowsAffected = st.executeUpdate();
+            ResultSet rs = st.executeQuery();
 
-            if (rowsAffected > 0) {
-                ResultSet rs = st.getGeneratedKeys();
+            if (rs.next()) {
+                Long id = rs.getLong(1);
 
-                if (rs.next()) {
-                    long id = rs.getLong(1);
-
-                    activity.setId(id);
-                }
-
-                DB.closeResultSet(rs);
-            } else {
-                throw new DbException("Unexpected error! No rows affected!");
+                activity.setId(id);
             }
+
+            DB.closeResultSet(rs);
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {

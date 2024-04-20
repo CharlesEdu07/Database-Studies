@@ -25,7 +25,7 @@ public class EmployeeDaoJDBC implements EmployeeDao {
 
         try {
             st = conn.prepareStatement(
-                    "INSERT INTO funcionario (nome, sexo, dt_nasc, salario, supervisor, depto) VALUES (?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO funcionario (nome, sexo, dt_nasc, salario, supervisor, depto) VALUES (?, ?, ?, ?, ?, ?) RETURNING codigo");
 
             st.setString(1, employee.getName());
             st.setString(2, employee.getGender().toString());
@@ -34,21 +34,15 @@ public class EmployeeDaoJDBC implements EmployeeDao {
             st.setLong(5, employee.getSupervisor().getId());
             st.setLong(6, employee.getDepartment().getId());
 
-            int rowsAffected = st.executeUpdate();
+            ResultSet rs = st.executeQuery();
 
-            if (rowsAffected > 0) {
-                ResultSet rs = st.getGeneratedKeys();
-
-                if (rs.next()) {
-                    long id = rs.getLong(1);
-
-                    employee.setId(id);
-                }
-
-                DB.closeResultSet(rs);
-            } else {
-                throw new DbException("Unexpected error! No rows affected!");
+            if (rs.next()) {
+                Long id = rs.getLong(1);
+                
+                employee.setId(id);
             }
+
+            DB.closeResultSet(rs);
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {
