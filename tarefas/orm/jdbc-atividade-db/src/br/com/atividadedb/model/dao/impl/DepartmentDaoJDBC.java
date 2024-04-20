@@ -23,28 +23,22 @@ public class DepartmentDaoJDBC implements DepartmentDao {
 
         try {
             st = conn.prepareStatement(
-                    "INSERT INTO department (nome, sigla, descricao, gerente) VALUES (?, ?, ?, ?)");
+                    "INSERT INTO department (nome, sigla, descricao, gerente) VALUES (?, ?, ?, ?) RETURNING codigo");
 
             st.setString(1, department.getName());
             st.setString(2, department.getAcronym());
             st.setString(3, department.getDescription());
             st.setLong(4, department.getManager().getId());
 
-            int rowsAffected = st.executeUpdate();
+            ResultSet rs = st.executeQuery();
 
-            if (rowsAffected > 0) {
-                ResultSet rs = st.getGeneratedKeys();
+            if (rs.next()) {
+                long id = rs.getLong(1);
 
-                if (rs.next()) {
-                    long id = rs.getLong(1);
-
-                    department.setId(id);
-                }
-
-                DB.closeResultSet(rs);
-            } else {
-                throw new DbException("Unexpected error! No rows affected!");
+                department.setId(id);
             }
+
+            DB.closeResultSet(rs);
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {
@@ -53,8 +47,41 @@ public class DepartmentDaoJDBC implements DepartmentDao {
     }
 
     @Override
-    public void findById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+    public Department findById(Long id) {
+        PreparedStatement st = null;
+
+        ResultSet rs = null;
+
+        try {
+            st = conn.prepareStatement("SELECT * FROM departamento WHERE codigo = ?");
+
+            st.setLong(1, id);
+
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                Department dep = instantiateDepartment(rs);
+
+                return dep;
+            }
+
+            return null;
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
+    }
+
+    private Department instantiateDepartment(ResultSet rs) throws SQLException {
+        Department dep = new Department();
+
+        dep.setId(rs.getLong("codigo"));
+        dep.setName(rs.getString("nome"));
+        dep.setAcronym(rs.getString("sigla"));
+        dep.setDescription(rs.getString("descricao"));
+
+        return dep;
     }
 }
