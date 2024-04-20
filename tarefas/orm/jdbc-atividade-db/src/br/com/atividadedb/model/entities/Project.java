@@ -17,6 +17,17 @@ public class Project implements Serializable {
     public Project() {
     }
 
+    public Project(Long id, String name, String description, Employee responsible, Department department, Date startDate,
+            Date endDate) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.responsible = responsible;
+        this.department = department;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
     public Long getId() {
         return id;
     }
