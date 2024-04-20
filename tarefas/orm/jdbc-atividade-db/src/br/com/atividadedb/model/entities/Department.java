@@ -1,6 +1,7 @@
 package br.com.atividadedb.model.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Department implements Serializable {
     private Long id;
@@ -8,6 +9,7 @@ public class Department implements Serializable {
     private String acronym;
     private String description;
     private Employee manager;
+    private List<Employee> employees;
 
     public Department() {
     }
@@ -52,6 +54,10 @@ public class Department implements Serializable {
         this.manager = manager;
     }
 
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -80,6 +86,6 @@ public class Department implements Serializable {
     @Override
     public String toString() {
         return "Department [id=" + id + ", name=" + name + ", acronym=" + acronym + ", description=" + description
-                + ", manager=" + manager + "]";
+                + ", manager=" + manager + ", employees=" + employees + "]";
     }
 }
