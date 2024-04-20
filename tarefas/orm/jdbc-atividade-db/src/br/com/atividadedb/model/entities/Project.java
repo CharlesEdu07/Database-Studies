@@ -2,6 +2,7 @@ package br.com.atividadedb.model.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Project implements Serializable {
     private Long id;
@@ -11,6 +12,7 @@ public class Project implements Serializable {
     private Department department;
     private LocalDate startDate;
     private LocalDate endDate;
+    private List<Activity> activities;
 
     public Project() {
     }
@@ -71,6 +73,10 @@ public class Project implements Serializable {
         this.endDate = endDate;
     }
 
+    public List<Activity> getActivities() {
+        return activities;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -99,6 +105,7 @@ public class Project implements Serializable {
     @Override
     public String toString() {
         return "Project [id=" + id + ", name=" + name + ", description=" + description + ", responsible=" + responsible
-                + ", department=" + department + ", startDate=" + startDate + ", endDate=" + endDate + "]";
+                + ", department=" + department + ", startDate=" + startDate + ", endDate=" + endDate + ", activities="
+                + activities + "]";
     }
 }
