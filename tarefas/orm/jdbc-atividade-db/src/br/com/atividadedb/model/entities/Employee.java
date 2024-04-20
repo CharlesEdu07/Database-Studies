@@ -9,8 +9,8 @@ public class Employee {
     private Character gender;
     private Date birthDate;
     private BigDecimal salary;
-    private Long supervisor;
-    private Long department;
+    private Employee supervisor;
+    private Department department;
 
     public Employee() {
     }
@@ -55,19 +55,19 @@ public class Employee {
         this.salary = salary;
     }
 
-    public Long getSupervisor() {
+    public Employee getSupervisor() {
         return supervisor;
     }
 
-    public void setSupervisor(Long supervisor) {
+    public void setSupervisor(Employee supervisor) {
         this.supervisor = supervisor;
     }
 
-    public Long getDepartment() {
+    public Department getDepartment() {
         return department;
     }
 
-    public void setDepartment(Long department) {
+    public void setDepartment(Department department) {
         this.department = department;
     }
 
