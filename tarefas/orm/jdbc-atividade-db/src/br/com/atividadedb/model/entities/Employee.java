@@ -2,13 +2,13 @@ package br.com.atividadedb.model.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Employee implements Serializable {
     private Long id;
     private String name;
     private Character gender;
-    private LocalDate birthDate;
+    private Date birthDate;
     private BigDecimal salary;
     private Employee supervisor;
     private Department department;
@@ -40,11 +40,11 @@ public class Employee implements Serializable {
         this.gender = gender;
     }
 
-    public LocalDate getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 
