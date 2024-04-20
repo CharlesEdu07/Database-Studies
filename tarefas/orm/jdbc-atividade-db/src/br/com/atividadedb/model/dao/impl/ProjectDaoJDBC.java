@@ -89,9 +89,21 @@ public class ProjectDaoJDBC implements ProjectDao {
     }
 
     @Override
-    public void updateResponsible(Employee employee) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateResponsible'");
+    public void updateResponsible(Project project, Employee employee) {
+        PreparedStatement st = null;
+
+        try {
+            st = conn.prepareStatement("UPDATE projeto SET responsavel = ? WHERE codigo = ?");
+
+            st.setLong(1, employee.getId());
+            st.setLong(2, project.getId());
+
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override

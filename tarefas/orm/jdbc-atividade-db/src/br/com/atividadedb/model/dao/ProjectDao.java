@@ -8,7 +8,7 @@ public interface ProjectDao {
 
     Project findById(Long id);
 
-    void updateResponsible(Employee employee);
+    void updateResponsible(Project project, Employee employee);
 
     void findAllWithActivities();
 }
