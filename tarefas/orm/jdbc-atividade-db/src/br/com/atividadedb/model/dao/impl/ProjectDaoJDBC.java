@@ -14,7 +14,7 @@ public class ProjectDaoJDBC implements ProjectDao {
     }
 
     @Override
-    public void insertActivity(Activity activity) {
+    public void addActivity(Activity activity) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'insertActivity'");
     }
