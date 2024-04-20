@@ -75,22 +75,27 @@ ORM é uma técnica de programação que mapeia objetos Java para tabelas em um 
 ## Principais conceitos e componentes do ORM em Java:
 
 ### Entidades:
+
 - Representam objetos Java que são mapeados para tabelas no banco de dados.
 - Cada entidade corresponde a uma tabela e cada campo da entidade corresponde a uma coluna na tabela.
 
 ### Mapeamento Objeto-Relacional (ORM):
+
 - É a configuração que define como as classes Java são mapeadas para as tabelas do banco de dados e vice-versa.
 - Pode ser feito de forma anotada (usando anotações Java) ou por meio de arquivos de mapeamento XML.
 
 ### Session / EntityManager:
+
 - É a interface principal para interagir com o banco de dados por meio do ORM.
 - Permite executar operações de CRUD (Create, Read, Update, Delete) em objetos Java, que são traduzidos automaticamente em consultas SQL pelo ORM.
 
 ### Consultas JPQL (Java Persistence Query Language):
+
 - Uma linguagem de consulta orientada a objetos semelhante ao SQL, mas que opera em entidades e atributos em vez de tabelas e colunas.
 - Permite consultas mais flexíveis e orientadas a objetos em comparação com o SQL padrão.
 
 ### Transações:
+
 - São operações que envolvem uma ou mais operações de banco de dados que devem ser tratadas de forma atômica (tudo ou nada).
 - As transações garantem a consistência dos dados, revertendo as alterações em caso de falha.
 
@@ -104,7 +109,7 @@ public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String nome;
     private double preco;
 
