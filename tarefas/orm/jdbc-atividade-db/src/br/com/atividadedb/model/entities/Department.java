@@ -1,6 +1,8 @@
 package br.com.atividadedb.model.entities;
 
-public class Department {
+import java.io.Serializable;
+
+public class Department implements Serializable {
     private Long id;
     private String name;
     private String acronym;

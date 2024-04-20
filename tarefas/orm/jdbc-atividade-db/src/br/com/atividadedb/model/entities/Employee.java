@@ -1,9 +1,10 @@
 package br.com.atividadedb.model.entities;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Employee {
+public class Employee implements Serializable {
     private Long id;
     private String name;
     private Character gender;

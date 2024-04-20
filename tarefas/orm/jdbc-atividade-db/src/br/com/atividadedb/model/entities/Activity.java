@@ -1,8 +1,9 @@
 package br.com.atividadedb.model.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Activity {
+public class Activity implements Serializable {
     private Long id;
     private String description;
     private Project project;
