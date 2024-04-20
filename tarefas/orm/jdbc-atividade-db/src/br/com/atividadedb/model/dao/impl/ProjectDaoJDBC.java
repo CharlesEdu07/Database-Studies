@@ -10,7 +10,6 @@ import br.com.atividadedb.db.DB;
 import br.com.atividadedb.db.DbException;
 import br.com.atividadedb.model.dao.ProjectDao;
 import br.com.atividadedb.model.entities.Project;
-import br.com.atividadedb.model.entities.Activity;
 import br.com.atividadedb.model.entities.Employee;
 
 public class ProjectDaoJDBC implements ProjectDao {
@@ -52,9 +51,41 @@ public class ProjectDaoJDBC implements ProjectDao {
     }
 
     @Override
-    public void addActivity(Activity activity) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addActivity'");
+    public Project findById(Long id) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        try {
+            st = conn.prepareStatement("SELECT * FROM projeto WHERE codigo = ?");
+
+            st.setLong(1, id);
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                Project project = instantiateProject(rs);
+
+                return project;
+            }
+
+            return null;
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
+    }
+
+    private Project instantiateProject(ResultSet rs) throws SQLException {
+        Project project = new Project();
+
+        project.setId(rs.getLong("codigo"));
+        project.setName(rs.getString("nome"));
+        project.setDescription(rs.getString("descricao"));
+        project.setStartDate(rs.getDate("data_inicio"));
+        project.setEndDate(rs.getDate("data_fim"));
+
+        return project;
     }
 
     @Override
