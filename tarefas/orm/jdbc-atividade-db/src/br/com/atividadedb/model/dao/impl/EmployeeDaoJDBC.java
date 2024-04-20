@@ -24,7 +24,7 @@ public class EmployeeDaoJDBC implements EmployeeDao {
 
         try {
             st = conn.prepareStatement(
-                    "INSERT INTO employee (nome, sexo, dt_nasc, salario, supervisor, depto ) VALUES (?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO employee (nome, sexo, dt_nasc, salario, supervisor, depto) VALUES (?, ?, ?, ?, ?, ?)");
 
             st.setString(1, employee.getName());
             st.setString(2, employee.getGender().toString());
