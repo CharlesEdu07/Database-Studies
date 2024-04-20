@@ -67,3 +67,65 @@ public class JDBCExample {
     }
 }
 ```
+
+# ORM (Object-Relational Mapping) em Java
+
+ORM é uma técnica de programação que mapeia objetos Java para tabelas em um banco de dados relacional. Isso permite que os desenvolvedores manipulem dados do banco de dados usando objetos Java, em vez de escrever consultas SQL manualmente. Na linguagem Java, existem várias bibliotecas ORM populares, incluindo Hibernate, JPA (Java Persistence API) e EclipseLink.
+
+## Principais conceitos e componentes do ORM em Java:
+
+### Entidades:
+- Representam objetos Java que são mapeados para tabelas no banco de dados.
+- Cada entidade corresponde a uma tabela e cada campo da entidade corresponde a uma coluna na tabela.
+
+### Mapeamento Objeto-Relacional (ORM):
+- É a configuração que define como as classes Java são mapeadas para as tabelas do banco de dados e vice-versa.
+- Pode ser feito de forma anotada (usando anotações Java) ou por meio de arquivos de mapeamento XML.
+
+### Session / EntityManager:
+- É a interface principal para interagir com o banco de dados por meio do ORM.
+- Permite executar operações de CRUD (Create, Read, Update, Delete) em objetos Java, que são traduzidos automaticamente em consultas SQL pelo ORM.
+
+### Consultas JPQL (Java Persistence Query Language):
+- Uma linguagem de consulta orientada a objetos semelhante ao SQL, mas que opera em entidades e atributos em vez de tabelas e colunas.
+- Permite consultas mais flexíveis e orientadas a objetos em comparação com o SQL padrão.
+
+### Transações:
+- São operações que envolvem uma ou mais operações de banco de dados que devem ser tratadas de forma atômica (tudo ou nada).
+- As transações garantem a consistência dos dados, revertendo as alterações em caso de falha.
+
+## Exemplo de uso básico com Hibernate:
+
+```java
+import javax.persistence.*;
+
+@Entity
+public class Produto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String nome;
+    private double preco;
+
+    // Getters e Setters
+}
+
+// Em outro lugar do código...
+EntityManagerFactory emf = Persistence.createEntityManagerFactory("nome-da-unidade-de-persistencia");
+EntityManager em = emf.createEntityManager();
+
+em.getTransaction().begin();
+
+// Criar e persistir um novo produto
+Produto produto = new Produto();
+produto.setNome("Produto A");
+produto.setPreco(100.0);
+em.persist(produto);
+
+em.getTransaction().commit();
+
+// Fechar o EntityManager e a fábrica de EntityManager
+em.close();
+emf.close();
+```
