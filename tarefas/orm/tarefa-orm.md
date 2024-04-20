@@ -1,68 +1,69 @@
-# ODBC utilizando Typescript
+# JDBC (Java Database Connectivity)
 
-O ODBC (Open Database Connectivity) é uma API (Application Programming Interface) que permite que aplicativos acessem e manipulem dados em diferentes sistemas de gerenciamento de banco de dados (SGBDs). Ele foi desenvolvido pela Microsoft e fornece uma interface padronizada para se comunicar com uma variedade de bancos de dados, independentemente do SGBD subjacente.
+JDBC é uma API (Application Programming Interface) do Java que permite que aplicativos Java acessem e manipulem bancos de dados relacionais. Ele fornece métodos para conectar-se a um banco de dados, enviar consultas SQL e processar os resultados.
 
-Em TypeScript, o uso do ODBC geralmente envolve a utilização de bibliotecas ou pacotes que implementam a interface ODBC para TypeScript. Esses pacotes podem fornecer métodos para estabelecer conexões com bancos de dados, executar consultas SQL, inserir e modificar dados, e lidar com transações.
+## Principais componentes do JDBC:
 
-Um exemplo de uso do ODBC em TypeScript seria:
+### DriverManager:
 
-```typescript
-import odbc from 'odbc'; // Importar a biblioteca ODBC
+- É a classe central do JDBC.
+- Ajuda na obtenção de uma conexão com um banco de dados específico.
+- A responsabilidade do DriverManager é carregar os drivers de banco de dados necessários.
 
-async function main() {
-  const connection = await odbc.connect('DSN=myDataSource'); // Estabelecer conexão com a fonte de dados
+### Connection:
 
-  // Executar uma consulta SQL
-  const result = await connection.query('SELECT * FROM myTable');
+- Representa uma conexão com um banco de dados.
+- Pode ser obtida usando o `DriverManager.getConnection()`.
+- Responsável por fornecer métodos para executar consultas SQL e gerenciar transações.
 
-  console.log(result); // Exibir o resultado da consulta
+### Statement:
 
-  await connection.close(); // Fechar a conexão
+- Utilizado para enviar consultas SQL ao banco de dados.
+- Existem três tipos de objetos `Statement`: `Statement`, `PreparedStatement` e `CallableStatement`.
+
+### ResultSet:
+
+- Armazena os resultados de uma consulta SQL.
+- Permite iterar sobre os registros retornados e acessar os valores das colunas.
+
+## Exemplo de uso básico:
+
+```java
+import java.sql.*;
+
+public class JDBCExample {
+    public static void main(String[] args) {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // 1. Registrar o driver JDBC
+            Class.forName("com.mysql.jdbc.Driver");
+
+            // 2. Estabelecer a conexão
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/meubanco", "usuario", "senha");
+
+            // 3. Criar uma instrução SQL
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM tabela");
+
+            // 4. Processar o resultado
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("coluna"));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            // 5. Fechar os recursos
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
-
-main().catch(console.error);
 ```
-
-Neste exemplo, estamos conectando a uma fonte de dados usando um DSN (Data Source Name) específico e executando uma consulta SQL simples para recuperar dados de uma tabela. Após a execução da consulta, a conexão é fechada para liberar recursos.
-
-O ODBC oferece uma maneira flexível e poderosa de interagir com diferentes bancos de dados, tornando-o uma escolha popular para desenvolvedores que precisam de interoperabilidade entre sistemas de banco de dados.
-
-
-# ORM com Prisma em TypeScript
-
-Prisma é uma ferramenta de ORM (Object-Relational Mapping) e de camada de banco de dados para TypeScript e JavaScript. Ele oferece uma maneira moderna e intuitiva de interagir com bancos de dados, permitindo que os desenvolvedores escrevam consultas em uma linguagem de consulta específica (Prisma Query Language ou PQL) e gerenciem esquemas de banco de dados de forma fácil e segura.
-
-Um dos principais benefícios do Prisma é a sua integração estreita com o TypeScript, proporcionando tipagem estática e autocompletamento em tempo de desenvolvimento. Além disso, o Prisma oferece suporte para várias bases de dados populares, incluindo PostgreSQL, MySQL e SQLite.
-
-Aqui está um exemplo básico de uso do Prisma em TypeScript:
-
-```typescript
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
-
-async function main() {
-  // Criar um novo usuário
-  const newUser = await prisma.user.create({
-    data: {
-      name: 'John',
-      age: 30,
-    },
-  });
-  console.log(newUser);
-
-  // Consultar usuários
-  const users = await prisma.user.findMany();
-  console.log(users);
-}
-
-main()
-  .catch(console.error)
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
-```
-
-Neste exemplo, estamos usando o Prisma para criar um novo usuário na tabela `user` com os dados especificados e, em seguida, recuperar todos os usuários da tabela. O Prisma cuida da geração de consultas SQL adequadas para as operações desejadas e fornece uma API limpa e concisa para interagir com o banco de dados.
-
-O Prisma simplifica o desenvolvimento de aplicativos, oferecendo uma experiência de desenvolvimento moderna e produtiva para trabalhar com bancos de dados em TypeScript.
