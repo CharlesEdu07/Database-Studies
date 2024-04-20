@@ -13,6 +13,14 @@ public class Activity implements Serializable {
     public Activity() {
     }
 
+    public Activity(Long id, String description, Project project, Date startDate, Date endDate) {
+        this.id = id;
+        this.description = description;
+        this.project = project;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
     public Long getId() {
         return id;
     }
