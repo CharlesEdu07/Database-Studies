@@ -4,14 +4,49 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class Project implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull(message = "Name is mandatory")
+    @NotBlank(message = "Name is mandatory")
     private String name;
+
+    @NotNull(message = "Description is mandatory")
+    @NotBlank(message = "Description is mandatory")
     private String description;
+
+    @NotNull(message = "Responsible is mandatory")
+    @ManyToOne
+    @JoinColumn(name = "responsavel")
     private Employee responsible;
+
+    @NotNull(message = "Department is mandatory")
+    @ManyToOne
+    @JoinColumn(name = "depto")
     private Department department;
+
+    @NotNull(message = "Start date is mandatory")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
+
+    @OneToMany(mappedBy = "project")
     private List<Activity> activities;
 
     public Project() {

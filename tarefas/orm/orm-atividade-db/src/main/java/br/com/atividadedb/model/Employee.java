@@ -4,24 +4,59 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
+
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class Employee implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull(message = "Name is mandatory")
+    @NotBlank(message = "Name is mandatory")
     private String name;
+
+    @NotNull(message = "Gender is mandatory")
     private Character gender;
-    private LocalDate birthLocalDate;
+
+    @NotNull(message = "Birth date is mandatory")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birthDate;
+
+    @NotNull(message = "Salary is mandatory")
+    @NumberFormat(style = Style.CURRENCY, pattern = "#,##0.00")
     private BigDecimal salary;
+
+    @OneToOne
+    @MapsId
     private Employee supervisor;
+
+    @ManyToOne
+    @JoinColumn(name = "depto")
     private Department department;
 
     public Employee() {
     }
 
-    public Employee(Long id, String name, Character gender, LocalDate birthLocalDate, BigDecimal salary, Employee supervisor,
+    public Employee(Long id, String name, Character gender, LocalDate birthDate, BigDecimal salary,
+            Employee supervisor,
             Department department) {
         this.id = id;
         this.name = name;
         this.gender = gender;
-        this.birthLocalDate = birthLocalDate;
+        this.birthDate = birthDate;
         this.salary = salary;
         this.supervisor = supervisor;
         this.department = department;
@@ -51,12 +86,12 @@ public class Employee implements Serializable {
         this.gender = gender;
     }
 
-    public LocalDate getBirthLocalDate() {
-        return birthLocalDate;
+    public LocalDate getbirthDate() {
+        return birthDate;
     }
 
-    public void setBirthLocalDate(LocalDate birthLocalDate) {
-        this.birthLocalDate = birthLocalDate;
+    public void setbirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
     public BigDecimal getSalary() {
@@ -110,7 +145,8 @@ public class Employee implements Serializable {
 
     @Override
     public String toString() {
-        return "Employee [id=" + id + ", name=" + name + ", gender=" + gender + ", birthLocalDate=" + birthLocalDate + ", salary="
+        return "Employee [id=" + id + ", name=" + name + ", gender=" + gender + ", birthDate=" + birthDate
+                + ", salary="
                 + salary + ", supervisor=" + supervisor + ", department=" + department + "]";
     }
 }

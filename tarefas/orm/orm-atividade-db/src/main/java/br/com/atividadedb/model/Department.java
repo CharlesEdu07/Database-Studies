@@ -3,12 +3,44 @@ package br.com.atividadedb.model;
 import java.io.Serializable;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class Department implements Serializable {
+
+    @Column(name = "codigo")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "nome")
+    @NotNull(message = "Name is mandatory")
+    @NotBlank(message = "Name is mandatory")
     private String name;
+
+    @Column(name = "sigla")
+    @NotNull(message = "Acronym is mandatory")
+    @NotBlank(message = "Acronym is mandatory")
     private String acronym;
+
+    @Column(name = "descricao")
+    @NotNull(message = "Description is mandatory")
+    @NotBlank(message = "Description is mandatory")
     private String description;
+
+    @Column(name = "gerente")
+    @NotNull(message = "Manager is mandatory")
+    @OneToOne(mappedBy = "id", cascade = CascadeType.ALL)
     private Employee manager;
+
+    @OneToMany(mappedBy = "department")
     private List<Employee> employees;
 
     public Department() {

@@ -3,11 +3,38 @@ package br.com.atividadedb.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
+
 public class Activity implements Serializable {
+
+    @Column(name = "codigo")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "descricao")
+    @NotNull(message = "Price is mandatory")
     private String description;
+
+    @Column(name = "projeto")
+    @NotNull(message = "Project is mandatory")
+    @ManyToOne
     private Project project;
+
+    @Column(name = "data_inicio")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
+
+    @Column(name = "data_fim")
+    @NotNull(message = "End date is mandatory")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
     public Activity() {
