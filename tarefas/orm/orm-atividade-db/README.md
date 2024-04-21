@@ -38,4 +38,4 @@ Agora o projeto deve estar em execução e você poderá acessá-lo em `http://l
 
 Certifique-se de explorar esses diretórios para entender melhor a estrutura e funcionamento do projeto.
 
-Se você tiver alguma dúvida ou encontrar problemas, sinta-se à vontade para entrar em contato com 
+Se você tiver alguma dúvida ou encontrar problemas, sinta-se à vontade para entrar em contato
