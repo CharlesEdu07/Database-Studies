@@ -1,6 +1,6 @@
 # Links para projetos de:
 
-- [Conexão com banco de dados utilizando ODBC](./jdbc-atividade-db)
+- [Conexão com banco de dados utilizando JDBC](./jdbc-atividade-db)
 - [ORM (Object-Relational Mapping) em Java](./orm)
 
 # JDBC (Java Database Connectivity)
