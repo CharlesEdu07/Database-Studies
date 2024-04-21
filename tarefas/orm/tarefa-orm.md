@@ -1,3 +1,8 @@
+# Links para projetos de:
+
+- [Conexão com banco de dados utilizando ODBC](./jdbc-atividade-db)
+- [ORM (Object-Relational Mapping) em Java](./orm)
+
 # JDBC (Java Database Connectivity)
 
 JDBC é uma API (Application Programming Interface) do Java que permite que aplicativos Java acessem e manipulem bancos de dados relacionais. Ele fornece métodos para conectar-se a um banco de dados, enviar consultas SQL e processar os resultados.
