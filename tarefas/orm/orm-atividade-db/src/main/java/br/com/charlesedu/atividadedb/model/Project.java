@@ -2,17 +2,15 @@ package br.com.charlesedu.atividadedb.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,28 +19,30 @@ public class Project implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "codigo")
     private Long id;
 
+    @Column(name = "nome")
     private String name;
 
+    @Column(name = "descricao")
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "responsavel")
+    @JoinColumn(name = "responsavel", referencedColumnName = "codigo")
     private Employee responsible;
 
     @ManyToOne
-    @JoinColumn(name = "depto")
+    @JoinColumn(name = "depto", referencedColumnName = "codigo")
     private Department department;
 
+    @Column(name = "data_inicio")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
+    @Column(name = "data_fim")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
-
-    @OneToMany(mappedBy = "project")
-    private List<Activity> activities;
 
     public Project() {
     }
@@ -115,10 +115,6 @@ public class Project implements Serializable {
         this.endDate = endDate;
     }
 
-    public List<Activity> getActivities() {
-        return activities;
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -147,7 +143,6 @@ public class Project implements Serializable {
     @Override
     public String toString() {
         return "Project [id=" + id + ", name=" + name + ", description=" + description + ", responsible=" + responsible
-                + ", department=" + department + ", startDate=" + startDate + ", endDate=" + endDate + ", activities="
-                + activities + "]";
+                + ", department=" + department + ", startDate=" + startDate + ", endDate=" + endDate + "]";
     }
 }

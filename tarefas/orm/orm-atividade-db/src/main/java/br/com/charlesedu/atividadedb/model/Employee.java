@@ -8,14 +8,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,24 +23,29 @@ public class Employee implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "codigo")
     private Long id;
 
+    @Column(name = "nome")
     private String name;
 
+    @Column(name = "sexo")
     private Character gender;
 
+    @Column(name = "dt_nasc")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
+    @Column(name = "salario")
     @NumberFormat(style = Style.CURRENCY, pattern = "#,##0.00")
     private BigDecimal salary;
 
-    @OneToOne
-    @MapsId
+    @ManyToOne
+    @JoinColumn(name = "supervisor", referencedColumnName = "codigo")
     private Employee supervisor;
 
     @ManyToOne
-    @JoinColumn(name = "depto")
+    @JoinColumn(name = "depto", referencedColumnName = "codigo")
     private Department department;
 
     public Employee() {
