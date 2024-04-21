@@ -16,9 +16,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "funcionario")
 public class Employee implements Serializable {
@@ -42,10 +47,12 @@ public class Employee implements Serializable {
     @NumberFormat(style = Style.CURRENCY, pattern = "#,##0.00")
     private BigDecimal salary;
 
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "supervisor", referencedColumnName = "codigo")
     private Employee supervisor;
 
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "depto", referencedColumnName = "codigo")
     private Department department;
