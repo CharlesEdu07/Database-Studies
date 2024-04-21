@@ -20,6 +20,15 @@ Antes de executar a aplicação, certifique-se de criar um banco de dados Postgr
 
 Baixe o driver JDBC do PostgreSQL [aqui](https://jdbc.postgresql.org/download/) e adicione-o ao classpath do projeto.
 
+## Organização do Projeto
+
+Este projeto está organizado da seguinte forma:
+
+- `src/br/com/atividadedb`: Este diretório contém o código-fonte do projeto.
+  - `app`: Contém a aplicação principal.
+  - `model`: Contém os Data Access Objects (DAOs) das entidades e a implementação das funções que interagem com o banco de dados utilizando JDBC.
+  - `db`: Contém os arquivos de configuração e conexão com o banco de dados.
+
 ## Executando o Projeto
 
 Após configurar o banco de dados e o driver JDBC, você pode executar a aplicação. Certifique-se de que o banco de dados PostgreSQL esteja em execução.
@@ -31,8 +40,8 @@ Para executar o projeto, siga estes passos:
 3. Execute o arquivo principal `Main.java`.
 
 ```bash
-javac Main.java
-java Main
+javac App.java
+java App
 ```
 
 ## Funcionalidades
