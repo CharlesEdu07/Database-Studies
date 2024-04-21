@@ -23,8 +23,6 @@ mvn clean install
 4. **Executar o aplicativo:**
 mvn spring-boot:run
 
-Agora o projeto deve estar em execução e você poderá acessá-lo em `http://localhost:8080`.
-
 ## Informações adicionais
 
 - **Testes ORM:**
