@@ -1,4 +1,4 @@
-package br.com.atividadedb.model;
+package br.com.charlesedu.atividadedb.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,27 +16,23 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "funcionario")
 public class Employee implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Name is mandatory")
-    @NotBlank(message = "Name is mandatory")
     private String name;
 
-    @NotNull(message = "Gender is mandatory")
     private Character gender;
 
-    @NotNull(message = "Birth date is mandatory")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
-    @NotNull(message = "Salary is mandatory")
     @NumberFormat(style = Style.CURRENCY, pattern = "#,##0.00")
     private BigDecimal salary;
 
