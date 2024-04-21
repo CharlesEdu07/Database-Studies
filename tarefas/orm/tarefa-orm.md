@@ -89,22 +89,9 @@ ORM é uma técnica de programação que mapeia objetos Java para tabelas em um 
 - É a configuração que define como as classes Java são mapeadas para as tabelas do banco de dados e vice-versa.
 - Pode ser feito de forma anotada (usando anotações Java) ou por meio de arquivos de mapeamento XML.
 
-### Session / EntityManager:
+## Exemplo de uso básico com Hibernate e JPA-Repository:
 
-- É a interface principal para interagir com o banco de dados por meio do ORM.
-- Permite executar operações de CRUD (Create, Read, Update, Delete) em objetos Java, que são traduzidos automaticamente em consultas SQL pelo ORM.
-
-### Consultas JPQL (Java Persistence Query Language):
-
-- Uma linguagem de consulta orientada a objetos semelhante ao SQL, mas que opera em entidades e atributos em vez de tabelas e colunas.
-- Permite consultas mais flexíveis e orientadas a objetos em comparação com o SQL padrão.
-
-### Transações:
-
-- São operações que envolvem uma ou mais operações de banco de dados que devem ser tratadas de forma atômica (tudo ou nada).
-- As transações garantem a consistência dos dados, revertendo as alterações em caso de falha.
-
-## Exemplo de uso básico com Hibernate:
+### Entidade Produto
 
 ```java
 import javax.persistence.*;
@@ -120,22 +107,87 @@ public class Produto {
 
     // Getters e Setters
 }
+```
 
-// Em outro lugar do código...
-EntityManagerFactory emf = Persistence.createEntityManagerFactory("nome-da-unidade-de-persistencia");
-EntityManager em = emf.createEntityManager();
+### Repositório Produto
 
-em.getTransaction().begin();
+```java
+import org.springframework.data.jpa.repository.JpaRepository;
 
-// Criar e persistir um novo produto
-Produto produto = new Produto();
-produto.setNome("Produto A");
-produto.setPreco(100.0);
-em.persist(produto);
+public interface ProdutoRepository extends JpaRepository<Produto, Long> {
+}
+```
 
-em.getTransaction().commit();
+### Serviço Produto
 
-// Fechar o EntityManager e a fábrica de EntityManager
-em.close();
-emf.close();
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class ProdutoService {
+    private final ProdutoRepository produtoRepository;
+
+    @Autowired
+    public ProdutoService(ProdutoRepository produtoRepository) {
+        this.produtoRepository = produtoRepository;
+    }
+
+    public List<Produto> buscarTodosProdutos() {
+        return produtoRepository.findAll();
+    }
+
+    public Produto buscarProdutoPorId(Long id) {
+        return produtoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado com o ID: " + id));
+    }
+
+    public Produto salvarProduto(Produto produto) {
+        return produtoRepository.save(produto);
+    }
+
+    public void deletarProduto(Long id) {
+        produtoRepository.deleteById(id);
+    }
+}
+```
+
+### Testando Produto
+
+```java
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+@SpringBootApplication
+@EnableJpaRepositories
+public class Application {
+
+    public static void main(String[] args) {
+        ApplicationContext context = SpringApplication.run(Application.class, args);
+
+        // Obtendo o bean do ProdutoRepository
+        ProdutoRepository produtoRepository = context.getBean(ProdutoRepository.class);
+
+        // Criando alguns produtos
+        Produto produto1 = new Produto();
+        produto1.setNome("Produto 1");
+        produto1.setPreco(10.99);
+
+        Produto produto2 = new Produto();
+        produto2.setNome("Produto 2");
+        produto2.setPreco(20.49);
+
+        // Salvando os produtos no banco de dados
+        produtoRepository.save(produto1);
+        produtoRepository.save(produto2);
+
+        // Imprimindo os produtos salvos
+        System.out.println("Todos os produtos no banco de dados:");
+        produtoRepository.findAll().forEach(System.out::println);
+    }
+}
 ```
