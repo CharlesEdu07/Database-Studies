@@ -13,4 +13,5 @@ Um repositório para o curso de Banco de Dados do curso de Sistemas de Informaç
 - [logical-data-models](./logical-data-models): Contém os arquivos .brm e jpg dos modelos lógicos de bancos de dados.
 - [normalization](./normalization): Contém os arquivos .brm e jpg dos modelos normalizados de bancos de dados.
 - [sql](./sql): Contém os scripts SQL para criação de tabelas, inserção de dados e consultas.
-- [tarefas](./tarefas/orm/tarefa-orm.md): Conexão com banco de dados utilizando ODBC e ORM.
+- [tarefa-orm](./tarefas/orm/tarefa-orm.md): Conexão com banco de dados utilizando ODBC e ORM.
+- [tarefa-instalação-db2](./tarefas/seminario-ibm-db2/) Guia de instalação do SGBD IBM Db2 com Docker.
